@@ -6,15 +6,6 @@ const url = require('url');
 http.createServer(async function(req, res) {
   const url = new URL(`http://${req.headers.host}${req.url}`);
 
-  /* if (url.pathname === '/') {
-    try {
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      
-    } catch(err) {
-      res.writeHead(404, {'Content-Type': 'text/html'});
-      return res.end("404 Not Found")
-    }
-  } */
   const filename = "." + url.pathname + '.html';
   const errorfile = await fs.readFile('404.html', 'utf8');
   try {

@@ -1,34 +1,31 @@
-const http = require('http');
+const express = require('express');
+const app = express();
+const port = 3000;
+const util = require('./util.js');
 const fs = require('fs/promises');
-const fscall = require('fs');
-const url = require('url');
 
-http.createServer(async function(req, res) {
-  const url = new URL(`http://${req.headers.host}${req.url}`);
 
-  /* if (url.pathname === '/') {
-    try {
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      
-    } catch(err) {
-      res.writeHead(404, {'Content-Type': 'text/html'});
-      return res.end("404 Not Found")
-    }
-  } */
-  const filename = "." + url.pathname + '.html';
+
+app.get('/', async function(req, res) {
+  const data = await util.sendPage(req.path);
+  res.send(data);
+});
+
+app.get('/about', async function(req, res) {
+  const data = await util.sendPage(req.path);
+  res.send(data);
+});
+
+app.get('/contact-me', async function(req, res) {
+  const data = await util.sendPage(req.path);
+  res.send(data);
+});
+
+app.use(async function(req,res){
   const errorfile = await fs.readFile('404.html', 'utf8');
-  try {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    if (url.pathname === '/') {
-      const data = await fs.readFile('index.html', 'utf8');
-      res.write(data)
-      res.end();
-    }
-    const data = await fs.readFile(filename, 'utf8');
-    res.write(data);
-    res.end();
-  } catch(err) {
-    res.writeHead(404, {'Content-Type': 'text/html'});
-    return res.end(errorfile)
-  }
-}).listen(8080);
+  res.status(404).send(errorfile);
+});
+
+app.listen(port, function() {
+  console.log(`App listening on port ${port}`)
+});

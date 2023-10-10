@@ -1,23 +1,23 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const util = require('./util.js');
+const sendPage = require('./util');
 const fs = require('fs/promises');
 
 
 
 app.get('/', async function(req, res) {
-  const data = await util.sendPage(req.path);
+  const data = await sendPage(req.path);
   res.send(data);
 });
 
 app.get('/about', async function(req, res) {
-  const data = await util.sendPage(req.path);
+  const data = await sendPage(req.path);
   res.send(data);
 });
 
 app.get('/contact-me', async function(req, res) {
-  const data = await util.sendPage(req.path);
+  const data = await sendPage(req.path);
   res.send(data);
 });
 

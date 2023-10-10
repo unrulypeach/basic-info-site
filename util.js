@@ -14,4 +14,4 @@ async function sendPage(filename) {
   }
 }
 
-module.exports = {sendPage};
+module.exports = sendPage;
